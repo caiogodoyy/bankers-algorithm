@@ -119,15 +119,46 @@ int main(int argc, char const *argv[])
         }
         else
         {
-            fprintf(out, "MAXIMUM  |  ALLOCATION  |  NEED\n");
+            fprintf(out, "MAXIMUM ");
+            int size = numResources * 2 - 8;
+            if(size == 0)
+                fprintf(out, "|");
+            else if(size > 0) {
+                for(int j = 0; j < size; j++)
+                    fprintf(out, " ");
+                fprintf(out, "|");
+            }
+            else
+                fprintf(out, "|");
+
+            fprintf(out, " ALLOCATION ");
+            size = numResources * 2 - 11;
+            if(size == 0)
+                fprintf(out, "|");
+            else if(size > 0) {
+                for(int j = 0; j < size; j++)
+                    fprintf(out, " ");
+                fprintf(out, "|");
+            }
+            else
+                fprintf(out, "|");
+
+            fprintf(out, " NEED\n");
+
             for (int i = 0; i < numCustomers; i++)
             {
                 for (int j = 0; j < numResources; j++)
                     fprintf(out, "%d ", maximum[i][j]);
-                fprintf(out, "   |  ");
+                if(numResources * 2 < 8)
+                    for (int j = 0; j < 8 - numResources * 2; j++)
+                        fprintf(out, " ");
+                fprintf(out, "| ");
                 for (int j = 0; j < numResources; j++)
                     fprintf(out, "%d ", allocation[i][j]);
-                fprintf(out, "      |  ");
+                if(numResources * 2 < 11)
+                    for (int j = 0; j < 11 - numResources * 2; j++)
+                        fprintf(out, " ");
+                fprintf(out, "| ");
                 for (int j = 0; j < numResources; j++)
                     fprintf(out, "%d ", need[i][j]);
                 fprintf(out, "\n");
